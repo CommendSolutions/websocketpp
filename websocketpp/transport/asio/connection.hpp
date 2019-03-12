@@ -421,8 +421,9 @@ protected:
     lib::error_code init_asio (io_service_ptr io_service) {
         m_io_service = io_service;
 
+		// https://github.com/Meoo/websocketpp/commit/5b99feef7f39e3c2ce729f08bf66766380c1aafe
         if (config::enable_multithreading) {
-            m_strand = lib::make_shared<boost::asio::strand>(
+            m_strand = lib::make_shared<boost::asio::io_service::strand>(
                 lib::ref(*io_service));
 
             m_async_read_handler = m_strand->wrap(lib::bind(

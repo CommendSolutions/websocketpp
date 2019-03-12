@@ -307,7 +307,7 @@ protected:
      */
     lib::error_code translate_ec(boost::system::error_code ec) {
         if (ec.category() == boost::asio::error::get_ssl_category()) {
-            if (ERR_GET_REASON(ec.value()) == SSL_R_SHORT_READ) {
+            if (ERR_GET_REASON(ec.value()) == SSL_F_SSL_READ) { // https://bugzilla.redhat.com/show_bug.cgi?id=1449163
                 return make_error_code(transport::error::tls_short_read);
             } else {
                 // We know it is a TLS related error, but otherwise don't know
